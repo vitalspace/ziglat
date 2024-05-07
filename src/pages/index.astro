@@ -1,13 +1,23 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Some from "../components/some.svelte";
+import Menu from "../components/menu.svelte";
+import Test from "../components/test.svelte";
 ---
 
-<Layout title="Welcome to Astro.">
-  <main>
-	<h1>Zig.lat</h1>
-  </main>
+<Layout title="Zig.lat">
+  <!-- <main>
+    <div > -->
+  <Menu />
+  <div>
+    <Some client:only="svelte" />
+  </div>
+  <Test/>
+  <!-- </div> -->
+  <!-- <Hello /> -->
+  <!-- </main> -->
 </Layout>
-
+<!-- 
 <style>
   main {
     margin: auto;
@@ -68,4 +78,4 @@ import Layout from "../layouts/Layout.astro";
     gap: 2rem;
     padding: 0;
   }
-</style>
+</style> -->
