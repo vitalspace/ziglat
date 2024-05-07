@@ -38,7 +38,7 @@
       resize();
 
       // enable physics debug
-    //   this.physics.debug?.enable();
+      //   this.physics.debug?.enable();
 
       // position camera
       this.camera.position.set(0, 10, 20);
@@ -105,10 +105,7 @@
 </script>
 
 <div id="welcome-game" class="border-2 border-red-400">
-  <div id="welcome-game-placeholder">
-    <div id="welcome-game-placeholder-loader"><div class="loader"></div></div>
-    <div id="welcome-game-placeholder-image"></div>
-  </div>
+    
 </div>
 
 <!-- <script>
