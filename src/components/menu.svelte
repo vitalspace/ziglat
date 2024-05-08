@@ -2,8 +2,8 @@
   console.log("Hello world");
 </script>
 
-<header class="fixed px-20 justify-center z-10 w-full ">
-  <nav class="flex justify-between py-10 text-white">
+<header class="fixed z-10 w-full border-2">
+  <nav class="flex justify-between py-10 container mx-auto text-white">
     <a href="/" class="flex">
       <img src="/zig-logo-light.svg" width="50" alt="" />
       <h2 class="text-xl font-mono">.lat</h2>
