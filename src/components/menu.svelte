@@ -2,7 +2,7 @@
   console.log("Hello world");
 </script>
 
-<header class="fixed z-10 w-full border-2">
+<header class="absolute z-20 w-full overflow-hidden">
   <nav class="flex justify-between py-10 container mx-auto text-white">
     <a href="/" class="flex">
       <img src="/zig-logo-light.svg" width="50" alt="" />

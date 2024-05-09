@@ -1,12 +1,11 @@
 <script>
   //  const { Project, Scene3D, PhysicsLoader, THREE } = ENABLE3D
-  import {
-    Project,
-    Scene3D,
-    PhysicsLoader,
-    THREE,
-    ExtendedObject3D,
-  } from "enable3d";
+  import { PhysicsLoader, Project, Scene3D } from "enable3d";
+  import * as THREE from "three";
+  import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+  import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+
+  import { MeteoriteManager } from "./lib/metiorite";
 
   class MainScene extends Scene3D {
     // cb: any;
@@ -20,16 +19,26 @@
 
       this.renderer.setPixelRatio(1);
       this.renderer.setSize(window.innerWidth, window.innerHeight);
+      const dLoader = new DRACOLoader();
+      dLoader.setDecoderPath(
+        "https://www.gstatic.com/draco/versioned/decoders/1.5.5/"
+      );
+      dLoader.setDecoderConfig({ type: "js" });
+
+      // Instantiate GLTFLoader and associate DRACOLoader with it
+      this.gltfLoader = new GLTFLoader();
+      this.gltfLoader.setDRACOLoader(dLoader);
+
+      this.meteoriteManager = new MeteoriteManager(this.scene, this.gltfLoader);
+      await this.meteoriteManager.loadMeteorite();
     }
 
     async preload() {
       console.log("preload");
-      await this.load.preload("ziggies", "assets/ziggies.glb");
     }
 
     async create() {
       console.log("create");
-      this.currentPointIndex = 0;
 
       // set up scene (light, ground, grid, sky, orbitControls)
       this.warpSpeed("-sky", "-orbitControls", "-ground", "-sky");
@@ -93,83 +102,11 @@
       };
 
       createStars();
-
-      const addZiggies = async () => {
-        const object = await this.load.gltf("ziggies");
-        const scene = object.scenes[0];
-
-        this.ziggie = new ExtendedObject3D();
-        this.ziggie.name = "ziggie";
-        this.ziggie.add(scene);
-
-        this.ziggie.position.set(-10, 0, 0);
-        // this.ziggie.rotation.set(0, 5, 0)
-        this.ziggie.scale.set(5, 5, 5);
-
-        this.ziggie.castShadow = true;
-        this.ziggie.receiveShadow = true;
-
-        this.add.existing(this.ziggie);
-
-        this.ziggie.traverse((child) => {
-          // console.log(child.name);
-          child.castShadow = child.receiveShadow = true;
-          if (child.name == "asteroide") this.rocks = child;
-
-          // console.log(child.name)
-
-          if (child.name == "dron") {
-            this.cb = child;
-            this.cb.position.copy(this.points[this.currentPointIndex]);
-
-            this.spotLight = new THREE.SpotLight(
-              0xffffff,
-              100,
-              100,
-              Math.PI / 4,
-              1,
-              5
-            ); // Color blanco, intensidad 1, distancia 100, ángulo 45 grados, penumbra 1, decay 1
-            this.spotLight.position.set(0, 0, 0);
-            // spotLight.target.position.set(0, 0, 0); // Ajusta el objetivo según sea necesario
-            this.cb.add(this.spotLight);
-            // this.lights.helper.pointLightHelper(this.spotLight);
-
-            this.spotLight.shadow.bias = 0.0;
-            this.spotLight.shadow.normalBias = 0.0;
-          }
-        });
-      };
-      addZiggies();
     }
 
     update() {
-      const initialY = -1; // Posición inicial en el eje Y
-      const amplitude = 0.2;
-      const time = Date.now() * 0.001; // Obtener el tiempo actual en segundos
-      const deltaY = Math.sin(time) * amplitude; // Calcular el cambio en el eje Y usando la función seno
-
-      if (this.rocks) {
-        this.rocks.position.y = initialY + deltaY;
-      }
-
-      if (this.cb) {
-        const t = (Date.now() % 10000) / 10000;
-        const position = this.spline.getPointAt(t);
-        this.cb.position.copy(position);
-
-        // Calcular la tangente de la curva en el punto actual
-        const tangent = this.spline.getTangentAt(t).normalize();
-
-        // Calcular el ángulo de rotación en el eje Y necesario para mirar hacia el siguiente punto
-        // Asumiendo que la dirección hacia adelante es a lo largo del eje X
-        const angle = Math.atan2(tangent.z, tangent.x);
-
-        // Aplicar la rotación en el eje Y
-        this.cb.rotation.z = angle;
-
-        // this.spotLight.target. = angle
-      }
+      this.meteoriteManager.updatedDronPosition();
+      this.meteoriteManager.updatedRocksPosition();
 
       if (this.stars.length > 0) {
         this.stars.forEach((star) => {
