@@ -1,0 +1,104 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Menu from "../../components/menu.svelte";
+
+import NexButton from "../../components/buttons/next_button.svelte";
+---
+
+<Layout title="Zig.lat | Aprende">
+  <Menu />
+  <div class="mt-10 absolute w-full">
+    <div class="container xl:mx-auto w-[800px]">
+      <article class="flex flex-col gap-y-4 text-white font-serif my-10">
+        <section class="flex flex-col gap-y-6">
+          <a href="#aprende-zig">
+            <h1 class="text-white text-5xl hover:underline font-semibold">
+              Aprende Zig
+            </h1>
+          </a>
+          <p>
+            Bienvenido a Aprende Zig, una introducción al lenguaje de
+            programación Zig, Esta, guia tiene como objetivo hacerte sentir
+            Confortable con Zig. Se asume que tenga experiencia previa en
+            programación, aunque no en ningún lenguaje de programación en
+            Particular.
+          </p>
+
+          <p>
+            Zig está en pleno desarrollo y tanto el lenguaje Zig como su
+            biblioteca estándar evolucionan constantemente. Esta guía está
+            orientada a la última versión de desarrollo de Zig. Sin embargo, es
+            posible que parte del código no esté sincronizado. Si has descargado
+            la última versión de Zig y tienes problemas para ejecutar algún
+            código, por favor, informa del problema.
+          </p>
+        </section>
+        <hr />
+        <section class="flex flex-col gap-y-4">
+          <a href="#tabla-de-contenidos">
+            <h2 class="text-2xl hover:underline font-semibold">
+              Tabla de contenidos
+            </h2>
+          </a>
+          <ol>
+            <li><a class="hover:underline" href="#instalando">1.- Instalando Zig</a></li>
+            <li><a class="hover:underline" href="/">2.- Visión general del lenguaje - Parte 1</a></li>
+            <li><a class="hover:underline" href="/">3.- Visión general del lenguaje - Parte 2</a></li>
+            <li><a class="hover:underline" href="/">4.- Guia de estilo</a></li>
+            <li><a class="hover:underline" href="/">5.- Punteros</a></li>
+            <li><a class="hover:underline" href="/">6.- Stack de Memoria</a></li>
+            <li><a class="hover:underline" href="/">7.- Heap de Memoria & Asignadores</a></li>
+            <li><a class="hover:underline" href="/">8.- Genéricos</a></li>
+            <li><a class="hover:underline" href="/">9.- Programación en zig</a></li>
+            <li><a class="hover:underline" href="/">10.- Conclusión</a></li>
+          </ol>
+        </section>
+        <hr />
+        <section class="flex flex-col gap-y-4">
+          <a href="#instalando">
+            <h2 class="text-2xl hover:underline font-semibold">
+              Instalando Zig
+            </h2>
+          </a>
+          <p>
+            La página de <a
+              class="underline text-purple-400"
+              href="https://ziglang.org/download/"
+              target="_blank">descargas</a
+            > de Zig incluye binarios precompilados para las plataformas más comunes.
+            En esta página encontrarás binarios para la última versión de desarrollo,
+            así como para las versiones principales. La última versión, de la que
+            trata esta guía, se encuentra en la parte superior de la página.
+          </p>
+          <p>
+            Para mi ordenador, descargaré <span class="underline"
+              >zig-macos-aarch64-0.12.0-dev.2777+2176a73d6.tar.xz</span
+            >. Puede que tengas una plataforma diferente o una versión más
+            reciente. Después de extrear el archivo deberías tener un binario
+            zig (además de otras cosas) al que querrás poner un alias, o añadir
+            a tu ruta/path o cualquier flujo al que estés acostumbrado.
+          </p>
+          <p>
+            Ahora deberías poder ejecutar <span
+              class="bg-gray-950 p-1 text-purple-400">zig zen</span
+            > y <span class="bg-gray-950 p-1 text-purple-400">zig version</span>
+            para probar tu configuración.
+          </p>
+        </section>
+
+        <section >
+          <div class="flex ">
+            <div class="w-full">
+              <NexButton url="/parte-1" text="Hola" hidden={true}   />
+            </div>
+            <div  class="w-1/4">
+              <NexButton url="/parte-1" text="Hola" hidden={true} />
+            </div>
+            <div class="w-full">
+              <NexButton url="aprende/vision_general_del_lenguaje_Parte_1" text="Visión general del lenguaje - Parte 1" hidden={false} />
+            </div>
+        </section>
+      </article>
+    </div>
+  </div>
+</Layout>
